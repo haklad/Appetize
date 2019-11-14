@@ -49,9 +49,15 @@ export default class CommentForm extends Component {
     this.setState({ error: "", loading: true });
     // persist the comments on server
     let { comment } = this.state;
+    // todo: change it back
     fetch("http://localhost:7777", {
       method: "post",
       body: JSON.stringify(comment)
+    })
+//    console.log(JSON.stringify(comment))
+//     fetch("http://localhost:5000/"+comment['name']+"/"+comment['message'], {
+//      method: "post",
+//      body: JSON.stringify(comment)
     })
       .then(res => res.json())
       .then(res => {
@@ -71,7 +77,7 @@ export default class CommentForm extends Component {
           console.log(res);
 
           // TODO: remove
-          window.location.reload();
+//          window.location.reload();
         }
       })
       .catch(err => {
