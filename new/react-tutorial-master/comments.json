@@ -1,0 +1,67 @@
+[
+    {
+        "id": 1388534400000,
+        "author": "Pete Hunt",
+        "text": "Hey there!"
+    },
+    {
+        "id": 1420070400000,
+        "author": "Paul O\u2019Shannessy",
+        "text": "React is *great*!"
+    },
+    {
+        "id": 1464988635157,
+        "author": "ben",
+        "text": "*abc*"
+    },
+    {
+        "id": 1464988636500,
+        "author": "ben",
+        "text": "*abc*"
+    },
+    {
+        "id": 1464988717637,
+        "author": "evil",
+        "text": "<a href=\"javascript:alert(1)\">alert(1)</a>"
+    },
+    {
+        "author": "dweepa",
+        "text": "sdgasg",
+        "id": 1573800816088
+    },
+    {
+        "author": "sadgag",
+        "text": "sadgasdg",
+        "id": 1573800819909
+    },
+    {
+        "author": "a",
+        "text": "b",
+        "id": 1573803072215
+    },
+    {
+        "author": "stag",
+        "text": "sdgasdg",
+        "id": 1573803266412
+    },
+    {
+        "author": "pdf",
+        "text": "staffs",
+        "id": 1573803280070
+    },
+    {
+        "author": "sad",
+        "text": "sadgsagd",
+        "id": 1573803365592
+    },
+    {
+        "author": "dweepa",
+        "text": "dweepa",
+        "id": 1573803599734
+    },
+    {
+        "author": "due",
+        "text": "ada",
+        "id": 1573803639216
+    }
+]

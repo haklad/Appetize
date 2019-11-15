@@ -6,7 +6,9 @@ from bson import json_util
 import base64
 import datetime
 from flask_cors import CORS
+import flask
 
+print(flask.__version__)
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'food'
 app.config['MONGO_URI'] = "mongodb://localhost/food"
