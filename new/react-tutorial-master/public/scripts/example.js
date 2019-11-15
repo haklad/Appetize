@@ -4,31 +4,41 @@ var Comment = React.createClass({
     var rawMarkup = md.render(this.props.children.toString());
     return { __html: rawMarkup };
   },
-  del:function()
-  {
-
-  },
+ range: function(start, end) {
+  let nums = [];
+  for (let i = start; i < end; i++) nums.push(i);
+  return nums;
+},
   render: function() {
     var name = this.props['author'];
-//    console.log("props", name);
+
+    let nums = this.range(0, this.props.rating);
+    const stars1 =  nums.map(i => (
+        <span className="fa fa-star" style={{'color':'orange'}}/>
+        ));
+
+//    console.log("props", this.props);
     return (
-      <div className="media mb-3">
-      <img
-        className="mr-3 bg-light rounded"
-        width="48"
-        height="48"
-        src={`https://api.adorable.io/avatars/48/${name.toLowerCase()}@adorable.io.png`}
-        alt={name}
-      />
-      <div className = "media-body p-2 shadow-sm rounded bg-light border">
-        <h2 className="commentAuthor">
-          {this.props.author}
-        </h2>
-        <div className="row">
-          <div className="col-sm-6"> <span dangerouslySetInnerHTML={this.rawMarkup()} /> </div>
-        </div>
-      </div>
-      </div>
+    <div className="media mb-3">
+              <img
+                className="mr-3 bg-light rounded"
+                width="48"
+                height="48"
+                src={`https://api.adorable.io/avatars/48/${name.toLowerCase()}@adorable.io.png`}
+                alt={name}
+              />
+
+              <div className = "media-body p-2 shadow-sm rounded bg-light border">
+                    <h2 className="commentAuthor">
+                      {this.props.author}
+                    </h2>
+                    <div className="row">
+                      <div className="col-sm-6"> <span dangerouslySetInnerHTML={this.rawMarkup()} /> </div>
+                      {stars1}
+                    </div>
+              </div>
+    </div>
+
     );
   }
 });
@@ -79,11 +89,9 @@ var CommentBox = React.createClass({
   render: function() {
     return (
       <div className="commentBox">
-        <h1>Comments</h1>
+      <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+        <h1 >Comments</h1>
         <CommentList data={this.state.data} />
-        <div className="pt-3">
-        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-        </div>
       </div>
     );
   }
@@ -93,7 +101,7 @@ var CommentList = React.createClass({
   render: function() {
     var commentNodes = this.props.data.map(function(comment) {
       return (
-        <Comment author={comment.author} key={comment.id}>
+        <Comment author={comment.author} rating={comment.rating} key={comment.id}>
           {comment.text}
         </Comment>
       );
@@ -107,8 +115,24 @@ var CommentList = React.createClass({
 });
 
 var CommentForm = React.createClass({
+  check5: function() { if(this.state.color5=="orange") {this.setState({color1:"orange", color2:"orange",color3:"orange",color4:"orange",color5: 'black', rating:4})}
+                         else {this.setState({color1:"orange", color2:"orange",color3:"orange",color4:"orange", color5: 'orange', rating:5})}
+                       },
+  check4: function() { if(this.state.color4=="orange") {this.setState({color1:"orange", color2:"orange",color3:"orange",color4: 'black',color5:'black' ,rating:3})}
+                         else {this.setState({color1:"orange", color2:"orange",color3:"orange",color4: 'orange',color5:'black', rating:4})}
+                       },
+  check3: function() { if(this.state.color3=="orange") {this.setState({color1:"orange", color2:"orange", color3: 'black',color4: 'black',color5:'black' , rating:2})}
+                         else {this.setState({color1:"orange", color2:"orange",color3: 'orange', color4:'black',color5:'black', rating:3})}
+                       },
+  check2: function() { if(this.state.color2=="orange") {this.setState({color1:"orange", color2: 'black', color3: 'black',color4: 'black',color5:'black', rating:1})}
+                        else {this.setState({color1:"orange",color2:'orange', color3:'black',color4:'black',color5:'black', rating:2})}
+                       },
+  check1: function() { if(this.state.color1=="orange") {this.setState({color1: 'black',color2: 'black', color3: 'black',color4: 'black',color5:'black', rating:0})}
+                         else {this.setState({color1: 'orange', color2:'black', color3:'black',color4:'black',color5:'black',rating:1})}
+                       },
+
   getInitialState: function() {
-    return {author: '', text: ''};
+    return {author: '', text: '', rating:0};
   },
   handleAuthorChange: function(e) {
     this.setState({author: e.target.value});
@@ -120,11 +144,12 @@ var CommentForm = React.createClass({
     e.preventDefault();
     var author = this.state.author.trim();
     var text = this.state.text.trim();
+    var rating = this.state.rating
     if (!text || !author) {
       return;
     }
-    this.props.onCommentSubmit({author: author, text: text});
-    this.setState({author: '', text: ''});
+    this.props.onCommentSubmit({author: author, text: text, rating:rating});
+    this.setState({author: '', text: '', rating:0,color1: 'black',color2: 'black',color3: 'black',color4: 'black',color5: 'black'});
   },
   render: function() {
     return (
@@ -146,7 +171,17 @@ var CommentForm = React.createClass({
           value={this.state.text}
           onChange={this.handleTextChange}
         />
-        <input type="submit" value="Post" />
+        <div className="row">
+        <h3 className="col-sm-6"> Rating</h3>
+        <div className="col-sm-6">
+                            <span onClick={this.check1} className="fa fa-star" style={{'color':this.state.color1}}></span>
+                            <span onClick={this.check2} className="fa fa-star" style={{'color':this.state.color2}}></span>
+                            <span onClick={this.check3} className="fa fa-star" style={{'color':this.state.color3}}></span>
+                            <span onClick={this.check4} className="fa fa-star" style={{'color':this.state.color4}}></span>
+                            <span onClick={this.check5} className="fa fa-star" style={{'color':this.state.color5}}></span>
+        </div>
+        </div>
+        <input type="submit" className="m-3" value="Post" />
 
       </form>
     </div>
