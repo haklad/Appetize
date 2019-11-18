@@ -8,7 +8,8 @@
     "react": "^16.4.1",
     "react-contexify": "^4.1.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-scroll-to-fetch": "^1.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
