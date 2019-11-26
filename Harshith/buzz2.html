@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
+
+
+<script>
+        function init(){
+            window.onscroll=obj.getContent;
+            obj.getContent();
+            scrollAmt=100;
+            count=0;
+        }
+        var obj={
+            xhr:new XMLHttpRequest(),
+            getContent:function(){
+                //scrollAmt = 100;
+                //if(document.body.scrollTop >scrollAmt || document.documentElement.scrollTop > scrollAmt){
+                obj.xhr.onreadystatechange=obj.showContent;
+                obj.xhr.open("GET","http://localhost:3000/api/buzz",true);
+                obj.xhr.send();
+                //}
+
+            },
+            showContent:function(){
+                if(this.readyState==4&&this.status==200){
+                    data = this.responseText;
+                    data = JSON.parse(data);
+                    for (var i = 1; i <=9; i++) {
+                        var object = data[i-1];
+                        var str1= i ;
+                        var str2= i + "t";
+                        var str3= i + "d";
+                        //console.log(str1);
+                        
+                        imagediv = document.getElementById(str1);
+                        imagediv.src=object["image"];
+                        titlediv = document.getElementById(str2);
+                        titlediv.innerHTML=object["rest"].bold().toUpperCase();
+                        descdiv = document.getElementById(str3)
+                        descdiv.innerHTML=object["description"];
+                    
+                    }
+
+            }
+        }
+    }
+        </script>
+</head>
+<body onload = "init()" background-image= "buzz.jpg">
+
+<h1 align="center">THE BUZZ</h1>
+<h2 align="center">Find out what the trending places are right now</h2>
+
+<div class="row">
+  <div class="column">
+    <img id="1" src=""  alt="Snow" style="width:100%">
+    <div id = "1t" align="center" > </div>
+    <div id = "1d">  </div>
+  </div>
+  <div class="column">
+    <img id="2" src=""  alt="Forest" style="width:100%">
+    <div id = "2t" align="center">  </div>
+    <div id = "2d">  </div>
+  </div>
+  <div class="column">
+    <img id="3" src="" alt="Mountains" style="width:100%">
+    <div id = "3t" align="center">  </div>
+    <div id = "3d">  </div>
+  </div>
+</div>
+
+<div class="row">
+        <div class="column">
+          <img id="4" src="" alt="Snow" style="width:100%">
+          <div id = "4t" align="center">  </div>
+          <div id = "4d">  </div>
+        </div>
+        <div class="column">
+          <img id="5" src="" alt="Forest" style="width:100%">
+          <div id = "5t" align="center">  </div>
+          <div id = "5d">  </div>
+        </div>
+        <div class="column">
+          <img id="6" src="" alt="Mountains" style="width:100%">
+          <div id = "6t" align="center">  </div>
+          <div id = "6d">  </div>
+        </div>
+      </div>
+      <div class="row">
+  <div class="column">
+    <img id="7" src="" alt="Snow" style="width:100%">
+    <div id = "7t" align="center">  </div>
+    <div id = "7d">  </div>
+  </div>
+  <div class="column">
+    <img id="8" src="" alt="Forest" style="width:100%">
+    <div id = "8t" align="center">  </div>
+    <div id = "8d">  </div>
+  </div>
+  <div class="column">
+    <img id="9" src="" alt="Mountains" style="width:100%">
+    <div id = "9t" align="center">  </div>
+    <div id = "9d">  </div>
+  </div>
+</div>
+
+</body>
+</html>
